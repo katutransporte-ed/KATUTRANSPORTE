@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katutransporte - Transporte Escolar Seguro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF6B35;
+            --secondary: #FFB627;
+            --accent: #4ECDC4;
+            --success: #95E1D3;
+            --info: #6B9BF5;
+            --danger: #FF5858;
+            --purple: #9B59B6;
+            --bg-light: #FFF8F0;
+            --bg-white: #FFFFFF;
+            --text-dark: #2C3E50;
+            --text-light: #7F8C8D;
+            --shadow: 0 8px 30px rgba(0,0,0,0.12);
+            --shadow-lg: 0 15px 50px rgba(0,0,0,0.15);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF8F0 0%, #FFE8D6 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Background Animation */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 100px;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .cloud:nth-child(1) {
+            width: 100px;
+            height: 40px;
+            top: 10%;
+            left: -100px;
+            animation-duration: 25s;
+        }
+
+        .cloud:nth-child(2) {
+            width: 150px;
+            height: 50px;
+            top: 30%;
+            left: -150px;
+            animation-duration: 30s;
+            animation-delay: 5s;
+        }
+
+        .cloud:nth-child(3) {
+            width: 120px;
+            height: 45px;
+            top: 60%;
+            left: -120px;
+            animation-duration: 35s;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateX(0) translateY(0);
+            }
+            50% {
+                transform: translateX(calc(100vw + 200px)) translateY(-20px);
+            }
+        }
+
+        /* Header */
+        header {
+            background: var(--bg-white);
+            box-shadow: var(--shadow);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            animation: bounce 2s infinite;
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 0;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            border: none;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Login/Register Screen */
+        .auth-screen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 150px);
+        }
+
+        .auth-box {
+            background: var(--bg-white);
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            max-width: 500px;
+            width: 100%;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-illustration {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--info));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #E0E0E0;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .auth-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .dashboard-header {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .welcome-section h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .user-role {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--success));
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: 1rem 2rem;
+            background: var(--bg-white);
+            border: none;
+            border-radius: 20px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            color: var(--text-dark);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .nav-tab:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Children List */
+        .children-list {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .list-header h3 {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .add-btn {
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, var(--success), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(149, 225, 211, 0.3);
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(149, 225, 211, 0.4);
+        }
+
+        .child-card {
+            background: linear-gradient(135deg, #FFF8F0, #FFFFFF);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--accent);
+        }
+
+        .child-card:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow);
+        }
+
+        .child-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .child-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--info), var(--purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        .child-details h4 {
+            margin-bottom: 0.3rem;
+            color: var(--text-dark);
+        }
+
+        .child-school {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-waiting {
+            background: rgba(255, 182, 39, 0.2);
+            color: #F59E0B;
+        }
+
+        .status-picked {
+            background: rgba(78, 236, 196, 0.2);
+            color: #059669;
+        }
+
+        .status-transit {
+            background: rgba(107, 155, 245, 0.2);
+            color: #2563EB;
+        }
+
+        .status-delivered {
+            background: rgba(149, 225, 211, 0.2);
+            color: #0891B2;
+        }
+
+        /* Map Container */
+        .map-container {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .map-placeholder {
+            height: 400px;
+            background: linear-gradient(135deg, #E3F2FD, #F0F4FF);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bus-icon-map {
+            font-size: 3rem;
+            animation: moveBus 5s infinite ease-in-out;
+        }
+
+        @keyframes moveBus {
+            0%, 100% {
+                transform: translateX(-100px) translateY(-50px);
+            }
+            50% {
+                transform: translateX(100px) translateY(50px);
+            }
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-white);
+            border-radius: 30px;
+            padding: 2.5rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--danger);
+            transform: rotate(90deg);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        /* Notifications */
+        .notifications-list {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .notification-item {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #FFF8F0, #FFFFFF);
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            border-left: 5px solid var(--info);
+            transition: all 0.3s ease;
+        }
+
+        .notification-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow);
+        }
+
+        .notification-time {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .notification-message {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        /* Payments */
+        .payment-card {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-left: 1rem;
+        }
+
+        .payment-paid {
+            background: rgba(149, 225, 211, 0.2);
+            color: #059669;
+        }
+
+        .payment-pending {
+            background: rgba(255, 88, 88, 0.2);
+            color: #DC2626;
+        }
+
+        /* Routes Management */
+        .route-card {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--info);
+        }
+
+        .route-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .route-name {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .route-time {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .children-count {
+            background: linear-gradient(135deg, var(--accent), var(--success));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* Admin Panel */
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-stat-card {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .admin-stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .admin-stat-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1rem;
+        }
+
+        /* Driver Interface */
+        .driver-route-list {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .pickup-item {
+            background: linear-gradient(135deg, #FFF8F0, #FFFFFF);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid var(--secondary);
+        }
+
+        .pickup-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-action {
+            padding: 0.7rem 1.2rem;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-pickup {
+            background: linear-gradient(135deg, var(--success), var(--accent));
+            color: white;
+        }
+
+        .btn-deliver {
+            background: linear-gradient(135deg, var(--info), var(--purple));
+            color: white;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Loading Spinner */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .alert-success {
+            background: rgba(149, 225, 211, 0.2);
+            color: #059669;
+            border-left: 5px solid #059669;
+        }
+
+        .alert-error {
+            background: rgba(255, 88, 88, 0.2);
+            color: #DC2626;
+            border-left: 5px solid #DC2626;
+        }
+
+        .alert-info {
+            background: rgba(107, 155, 245, 0.2);
+            color: #2563EB;
+            border-left: 5px solid #2563EB;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .child-card {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .pickup-item {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-1 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 2rem;
+        }
+
+        .mt-1 {
+            margin-top: 1rem;
+        }
+
+        .mt-2 {
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">🚌</div>
+                <div class="logo-text">
+                    <h1>Katutransporte</h1>
+                    <p>Transporte Escolar Seguro</p>
+                </div>
+            </a>
+            <nav class="nav-menu" id="navMenu">
+                <button class="nav-btn btn-secondary" onclick="showLogin()">Entrar</button>
+                <button class="nav-btn btn-primary" onclick="showRegister()">Registar</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Login Screen -->
+        <div id="loginScreen" class="auth-screen">
+            <div class="auth-box">
+                <div class="auth-header">
+                    <div class="auth-illustration">🎒</div>
+                    <h2>Bem-vindo de volta!</h2>
+                    <p>Entre para acompanhar seus filhos</p>
+                </div>
+                <div id="loginAlert"></div>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="email" required placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Senha</label>
+                        <input type="password" class="form-control" name="password" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="submit-btn">Entrar</button>
+                </form>
+                <div class="auth-footer">
+                    <p>Não tem conta? <a href="#" class="auth-link" onclick="showRegister()">Registar aqui</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Register Screen -->
+        <div id="registerScreen" class="auth-screen hidden">
+            <div class="auth-box">
+                <div class="auth-header">
+                    <div class="auth-illustration">👨‍👩‍👧‍👦</div>
+                    <h2>Criar Conta</h2>
+                    <p>Junte-se à família Katutransporte</p>
+                </div>
+                <div id="registerAlert"></div>
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" class="form-control" name="name" required placeholder="Seu nome">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="email" required placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="tel" class="form-control" name="phone" required placeholder="+244 900 000 000">
+                    </div>
+                    <div class="form-group">
+                        <label>Senha</label>
+                        <input type="password" class="form-control" name="password" required placeholder="••••••••">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Conta</label>
+                        <select class="form-control" name="role" required>
+                            <option value="parent">Pai/Responsável</option>
+                            <option value="driver">Motorista</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">Criar Conta</button>
+                </form>
+                <div class="auth-footer">
+                    <p>Já tem conta? <a href="#" class="auth-link" onclick="showLogin()">Entrar aqui</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="dashboard">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+                <div class="welcome-section">
+                    <h2>Olá, <span id="userName">Utilizador</span>!</h2>
+                    <span class="user-role" id="userRole">Pai/Responsável</span>
+                </div>
+                <button class="nav-btn btn-secondary" onclick="handleLogout()">Sair</button>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showTab('overview')">Visão Geral</button>
+                <button class="nav-tab" onclick="showTab('children')">Crianças</button>
+                <button class="nav-tab" onclick="showTab('tracking')">Rastreamento</button>
+                <button class="nav-tab" onclick="showTab('notifications')">Notificações</button>
+                <button class="nav-tab" onclick="showTab('payments')">Pagamentos</button>
+                <button class="nav-tab hidden" id="routesTab" onclick="showTab('routes')">Rotas</button>
+                <button class="nav-tab hidden" id="adminTab" onclick="showTab('admin')">Administração</button>
+            </div>
+
+            <!-- Overview Section -->
+            <div id="overviewSection" class="content-section active">
+                <div class="cards-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, var(--accent), var(--success));">👶</div>
+                        <div class="stat-number" id="totalChildren">0</div>
+                        <div class="stat-label">Crianças Registadas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, var(--info), var(--purple));">🚌</div>
+                        <div class="stat-number" id="activeTrips">0</div>
+                        <div class="stat-label">Viagens Ativas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">✅</div>
+                        <div class="stat-number" id="completedTrips">0</div>
+                        <div class="stat-label">Viagens Completas</div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="children-list">
+                    <div class="list-header">
+                        <h3>Atividade Recente</h3>
+                    </div>
+                    <div id="recentActivity"></div>
+                </div>
+            </div>
+
+            <!-- Children Section -->
+            <div id="childrenSection" class="content-section">
+                <div class="children-list">
+                    <div class="list-header">
+                        <h3>Minhas Crianças</h3>
+                        <button class="add-btn" onclick="openAddChildModal()">+ Adicionar Criança</button>
+                    </div>
+                    <div id="childrenList"></div>
+                </div>
+            </div>
+
+            <!-- Tracking Section -->
+            <div id="trackingSection" class="content-section">
+                <div class="map-container">
+                    <div class="list-header">
+                        <h3>Rastreamento em Tempo Real</h3>
+                    </div>
+                    <div class="map-placeholder">
+                        <div class="bus-icon-map">🚌</div>
+                    </div>
+                    <p class="text-center mt-1" style="color: var(--text-light);">
+                        Mapa em tempo real será integrado com Google Maps API
+                    </p>
+                </div>
+
+                <!-- Current Status -->
+                <div class="children-list">
+                    <div class="list-header">
+                        <h3>Status Atual das Crianças</h3>
+                    </div>
+                    <div id="trackingList"></div>
+                </div>
+            </div>
+
+            <!-- Notifications Section -->
+            <div id="notificationsSection" class="content-section">
+                <div class="notifications-list">
+                    <div class="list-header">
+                        <h3>Notificações</h3>
+                    </div>
+                    <div id="notificationsList"></div>
+                </div>
+            </div>
+
+            <!-- Payments Section -->
+            <div id="paymentsSection" class="content-section">
+                <div class="payment-card">
+                    <div class="list-header">
+                        <h3>Histórico de Pagamentos</h3>
+                    </div>
+                    <div id="paymentsList"></div>
+                </div>
+            </div>
+
+            <!-- Routes Section (Driver) -->
+            <div id="routesSection" class="content-section">
+                <div class="driver-route-list">
+                    <div class="list-header">
+                        <h3>Minha Rota de Hoje</h3>
+                    </div>
+                    <div id="driverRouteList"></div>
+                </div>
+            </div>
+
+            <!-- Admin Section -->
+            <div id="adminSection" class="content-section">
+                <div class="admin-stats">
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon" style="background: linear-gradient(135deg, var(--accent), var(--success));">👨‍👩‍👧‍👦</div>
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Total de Famílias</div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon" style="background: linear-gradient(135deg, var(--info), var(--purple));">🚌</div>
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Motoristas Ativos</div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">💰</div>
+                        <div class="stat-number">0 Kz</div>
+                        <div class="stat-label">Receita Mensal</div>
+                    </div>
+                </div>
+
+                <!-- Management Options -->
+                <div class="route-card">
+                    <h3>Gestão de Rotas</h3>
+                    <p class="mt-1">Sistema de otimização automática de rotas em desenvolvimento</p>
+                    <button class="add-btn mt-1">Criar Nova Rota</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Child Modal -->
+    <div id="addChildModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Adicionar Criança</h3>
+                <button class="close-modal" onclick="closeModal('addChildModal')">&times;</button>
+            </div>
+            <form id="addChildForm" onsubmit="handleAddChild(event)">
+                <div class="form-group">
+                    <label>Nome da Criança</label>
+                    <input type="text" class="form-control" name="name" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Idade</label>
+                        <input type="number" class="form-control" name="age" required min="3" max="18">
+                    </div>
+                    <div class="form-group">
+                        <label>Género</label>
+                        <select class="form-control" name="gender" required>
+                            <option value="M">Masculino</option>
+                            <option value="F">Feminino</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Escola</label>
+                    <input type="text" class="form-control" name="school" required>
+                </div>
+                <div class="form-group">
+                    <label>Endereço Residencial</label>
+                    <input type="text" class="form-control" name="address" required>
+                </div>
+                <div class="form-group">
+                    <label>Contacto de Emergência</label>
+                    <input type="tel" class="form-control" name="emergency_contact" required>
+                </div>
+                <div class="form-group">
+                    <label>Informações Médicas (Alergias, Medicamentos, etc.)</label>
+                    <textarea class="form-control" name="medical_info" rows="3"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Adicionar Criança</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <script>
+        // Global State
+        let currentUser = null;
+        let children = [];
+        let notifications = [];
+        let payments = [];
+
+        // API Base URL
+        const API_URL = 'http://localhost:3000/api';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+        });
+
+        // Auth Functions
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                fetchUserData();
+            }
+        }
+
+        async function fetchUserData() {
+            const token = localStorage.getItem('token');
+            try {
+                const response = await fetch(`${API_URL}/user`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                if (response.ok) {
+                    currentUser = await response.json();
+                    showDashboard();
+                    loadDashboardData();
+                } else {
+                    localStorage.removeItem('token');
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            showLoading();
+            
+            const formData = new FormData(event.target);
+            const data = {
+                email: formData.get('email'),
+                password: formData.get('password')
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                hideLoading();
+
+                if (response.ok) {
+                    localStorage.setItem('token', result.token);
+                    currentUser = result.user;
+                    showAlert('loginAlert', 'Login realizado com sucesso!', 'success');
+                    setTimeout(() => {
+                        showDashboard();
+                        loadDashboardData();
+                    }, 1000);
+                } else {
+                    showAlert('loginAlert', result.error || 'Erro ao fazer login', 'error');
+                }
+            } catch (error) {
+                hideLoading();
+                showAlert('loginAlert', 'Erro de conexão com o servidor', 'error');
+            }
+        }
+
+        async function handleRegister(event) {
+            event.preventDefault();
+            showLoading();
+            
+            const formData = new FormData(event.target);
+            const data = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                password: formData.get('password'),
+                role: formData.get('role')
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                hideLoading();
+
+                if (response.ok) {
+                    showAlert('registerAlert', 'Conta criada com sucesso! Faça login.', 'success');
+                    setTimeout(() => showLogin(), 2000);
+                } else {
+                    showAlert('registerAlert', result.error || 'Erro ao criar conta', 'error');
+                }
+            } catch (error) {
+                hideLoading();
+                showAlert('registerAlert', 'Erro de conexão com o servidor', 'error');
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('token');
+            currentUser = null;
+            children = [];
+            notifications = [];
+            payments = [];
+            
+            document.getElementById('dashboard').classList.remove('active');
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('navMenu').innerHTML = `
+                <button class="nav-btn btn-secondary" onclick="showLogin()">Entrar</button>
+                <button class="nav-btn btn-primary" onclick="showRegister()">Registar</button>
+            `;
+        }
+
+        // UI Functions
+        function showLogin() {
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('registerScreen').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('active');
+        }
+
+        function showRegister() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('registerScreen').classList.remove('hidden');
+            document.getElementById('dashboard').classList.remove('active');
+        }
+
+        function showDashboard() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('registerScreen').classList.add('hidden');
+            document.getElementById('dashboard').classList.add('active');
+            
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userRole').textContent = getRoleLabel(currentUser.role);
+            
+            // Show role-specific tabs
+            if (currentUser.role === 'driver') {
+                document.getElementById('routesTab').classList.remove('hidden');
+            }
+            if (currentUser.role === 'admin') {
+                document.getElementById('adminTab').classList.remove('hidden');
+            }
+
+            document.getElementById('navMenu').innerHTML = `
+                <button class="nav-btn btn-secondary" onclick="handleLogout()">Sair</button>
+            `;
+        }
+
+        function showTab(tabName) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(tabName + 'Section').classList.add('active');
+            
+            // Add active to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function showAlert(elementId, message, type) {
+            const alertElement = document.getElementById(elementId);
+            alertElement.innerHTML = `
+                <div class="alert alert-${type}">
+                    ${message}
+                </div>
+            `;
+            setTimeout(() => {
+                alertElement.innerHTML = '';
+            }, 5000);
+        }
+
+        function showLoading() {
+            document.getElementById('loading').classList.add('active');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').classList.remove('active');
+        }
+
+        function getRoleLabel(role) {
+            const labels = {
+                'parent': 'Pai/Responsável',
+                'driver': 'Motorista',
+                'admin': 'Administrador'
+            };
+            return labels[role] || role;
+        }
+
+        function getStatusLabel(status) {
+            const labels = {
+                'waiting': 'Aguardando',
+                'picked': 'Recolhida',
+                'transit': 'Em Transporte',
+                'delivered': 'Entregue'
+            };
+            return labels[status] || status;
+        }
+
+        function getStatusClass(status) {
+            return `status-${status}`;
+        }
+
+        // Dashboard Data Functions
+        async function loadDashboardData() {
+            const token = localStorage.getItem('token');
+            
+            try {
+                // Load children
+                const childrenResponse = await fetch(`${API_URL}/children`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (childrenResponse.ok) {
+                    children = await childrenResponse.json();
+                    updateChildrenDisplay();
+                    updateOverview();
+                }
+
+                // Load notifications
+                const notificationsResponse = await fetch(`${API_URL}/notifications`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (notificationsResponse.ok) {
+                    notifications = await notificationsResponse.json();
+                    updateNotificationsDisplay();
+                }
+
+                // Load payments
+                const paymentsResponse = await fetch(`${API_URL}/payments`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (paymentsResponse.ok) {
+                    payments = await paymentsResponse.json();
+                    updatePaymentsDisplay();
+                }
+
+                // Load driver route if driver
+                if (currentUser.role === 'driver') {
+                    loadDriverRoute();
+                }
+
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            }
+        }
+
+        function updateOverview() {
+            document.getElementById('totalChildren').textContent = children.length;
+            document.getElementById('activeTrips').textContent = children.filter(c => c.status === 'transit').length;
+            document.getElementById('completedTrips').textContent = children.filter(c => c.status === 'delivered').length;
+
+            // Recent activity
+            const recentActivity = document.getElementById('recentActivity');
+            if (children.length === 0) {
+                recentActivity.innerHTML = '<p class="text-center" style="color: var(--text-light);">Nenhuma atividade recente</p>';
+            } else {
+                recentActivity.innerHTML = children.slice(0, 3).map(child => `
+                    <div class="child-card">
+                        <div class="child-info">
+                            <div class="child-avatar">${child.name.charAt(0)}</div>
+                            <div class="child-details">
+                                <h4>${child.name}</h4>
+                                <p class="child-school">${child.school}</p>
+                            </div>
+                        </div>
+                        <span class="status-badge ${getStatusClass(child.status)}">${getStatusLabel(child.status)}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function updateChildrenDisplay() {
+            const childrenList = document.getElementById('childrenList');
+            const trackingList = document.getElementById('trackingList');
+            
+            if (children.length === 0) {
+                const emptyMessage = '<p class="text-center" style="color: var(--text-light);">Nenhuma criança registada</p>';
+                childrenList.innerHTML = emptyMessage;
+                trackingList.innerHTML = emptyMessage;
+            } else {
+                const childrenHTML = children.map(child => `
+                    <div class="child-card">
+                        <div class="child-info">
+                            <div class="child-avatar">${child.name.charAt(0)}</div>
+                            <div class="child-details">
+                                <h4>${child.name}</h4>
+                                <p class="child-school">${child.school} • ${child.age} anos</p>
+                                <p class="child-school">📍 ${child.address}</p>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="status-badge ${getStatusClass(child.status)}">${getStatusLabel(child.status)}</span>
+                        </div>
+                    </div>
+                `).join('');
+                
+                childrenList.innerHTML = childrenHTML;
+                trackingList.innerHTML = childrenHTML;
+            }
+        }
+
+        function updateNotificationsDisplay() {
+            const notificationsList = document.getElementById('notificationsList');
+            
+            if (notifications.length === 0) {
+                notificationsList.innerHTML = '<p class="text-center" style="color: var(--text-light);">Sem notificações</p>';
+            } else {
+                notificationsList.innerHTML = notifications.map(notif => `
+                    <div class="notification-item">
+                        <div class="notification-time">${new Date(notif.created_at).toLocaleString('pt-PT')}</div>
+                        <div class="notification-message">${notif.message}</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function updatePaymentsDisplay() {
+            const paymentsList = document.getElementById('paymentsList');
+            
+            if (payments.length === 0) {
+                paymentsList.innerHTML = '<p class="text-center" style="color: var(--text-light);">Sem histórico de pagamentos</p>';
+            } else {
+                paymentsList.innerHTML = payments.map(payment => `
+                    <div class="child-card">
+                        <div class="child-info">
+                            <div class="child-details">
+                                <h4>${payment.description}</h4>
+                                <p class="child-school">${new Date(payment.created_at).toLocaleDateString('pt-PT')}</p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="stat-number" style="font-size: 1.5rem;">${payment.amount} Kz</div>
+                            <span class="payment-status ${payment.status === 'paid' ? 'payment-paid' : 'payment-pending'}">
+                                ${payment.status === 'paid' ? 'Pago' : 'Pendente'}
+                            </span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        async function loadDriverRoute() {
+            const token = localStorage.getItem('token');
+            
+            try {
+                const response = await fetch(`${API_URL}/driver/route`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    const route = await response.json();
+                    updateDriverRouteDisplay(route);
+                }
+            } catch (error) {
+                console.error('Error loading driver route:', error);
+            }
+        }
+
+        function updateDriverRouteDisplay(route) {
+            const routeList = document.getElementById('driverRouteList');
+            
+            if (!route || route.length === 0) {
+                routeList.innerHTML = '<p class="text-center" style="color: var(--text-light);">Sem rotas atribuídas hoje</p>';
+            } else {
+                routeList.innerHTML = route.map((child, index) => `
+                    <div class="pickup-item">
+                        <div class="child-info">
+                            <div class="pickup-number">${index + 1}</div>
+                            <div class="child-avatar">${child.name.charAt(0)}</div>
+                            <div class="child-details">
+                                <h4>${child.name}</h4>
+                                <p class="child-school">📍 ${child.address}</p>
+                            </div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn-action btn-pickup" onclick="updateChildStatus(${child.id}, 'picked')">
+                                Recolher
+                            </button>
+                            <button class="btn-action btn-deliver" onclick="updateChildStatus(${child.id}, 'delivered')">
+                                Entregar
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Child Management Functions
+        function openAddChildModal() {
+            document.getElementById('addChildModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        async function handleAddChild(event) {
+            event.preventDefault();
+            showLoading();
+            
+            const formData = new FormData(event.target);
+            const data = {
+                name: formData.get('name'),
+                age: formData.get('age'),
+                gender: formData.get('gender'),
+                school: formData.get('school'),
+                address: formData.get('address'),
+                emergency_contact: formData.get('emergency_contact'),
+                medical_info: formData.get('medical_info')
+            };
+
+            const token = localStorage.getItem('token');
+
+            try {
+                const response = await fetch(`${API_URL}/children`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                hideLoading();
+
+                if (response.ok) {
+                    closeModal('addChildModal');
+                    loadDashboardData();
+                    showTab('children');
+                } else {
+                    alert('Erro ao adicionar criança');
+                }
+            } catch (error) {
+                hideLoading();
+                alert('Erro de conexão com o servidor');
+            }
+        }
+
+        async function updateChildStatus(childId, newStatus) {
+            const token = localStorage.getItem('token');
+            
+            try {
+                const response = await fetch(`${API_URL}/children/${childId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ status: newStatus })
+                });
+
+                if (response.ok) {
+                    loadDashboardData();
+                }
+            } catch (error) {
+                console.error('Error updating child status:', error);
+            }
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
