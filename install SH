@@ -1,0 +1,76 @@
+#!/bin/bash
+
+echo "╔════════════════════════════════════════════╗"
+echo "║   🚌 KATUTRANSPORTE - INSTALAÇÃO 🚌      ║"
+echo "╚════════════════════════════════════════════╝"
+echo ""
+
+# Check if Node.js is installed
+if ! command -v node &> /dev/null
+then
+    echo "❌ Node.js não encontrado!"
+    echo "📥 Por favor, instale o Node.js primeiro:"
+    echo "   https://nodejs.org/"
+    exit 1
+fi
+
+echo "✅ Node.js encontrado: $(node --version)"
+echo ""
+
+# Check if npm is installed
+if ! command -v npm &> /dev/null
+then
+    echo "❌ npm não encontrado!"
+    exit 1
+fi
+
+echo "✅ npm encontrado: $(npm --version)"
+echo ""
+
+# Install dependencies
+echo "📦 Instalando dependências..."
+npm install
+
+if [ $? -eq 0 ]; then
+    echo "✅ Dependências instaladas com sucesso!"
+else
+    echo "❌ Erro ao instalar dependências"
+    exit 1
+fi
+
+echo ""
+
+# Create .env file if it doesn't exist
+if [ ! -f .env ]; then
+    echo "📝 Criando arquivo .env..."
+    cp .env.example .env
+    echo "✅ Arquivo .env criado!"
+    echo "⚠️  Por favor, edite o arquivo .env com suas configurações"
+else
+    echo "✅ Arquivo .env já existe"
+fi
+
+echo ""
+
+# Create necessary directories
+echo "📁 Criando diretórios necessários..."
+mkdir -p logs
+mkdir -p uploads
+echo "✅ Diretórios criados!"
+
+echo ""
+echo "╔════════════════════════════════════════════╗"
+echo "║        ✅ INSTALAÇÃO COMPLETA! ✅         ║"
+echo "╠════════════════════════════════════════════╣"
+echo "║  Para iniciar o servidor:                  ║"
+echo "║  $ npm start                               ║"
+echo "║                                            ║"
+echo "║  Para desenvolvimento:                     ║"
+echo "║  $ npm run dev                             ║"
+echo "║                                            ║"
+echo "║  Acesse: http://localhost:3000             ║"
+echo "║                                            ║"
+echo "║  Login Admin:                              ║"
+echo "║  Email: admin@katutransporte.com           ║"
+echo "║  Senha: admin123                           ║"
+echo "╚════════════════════════════════════════════╝"
