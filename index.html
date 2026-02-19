@@ -590,6 +590,159 @@ textarea.form-input{resize:vertical;min-height:80px}
 .empty-state h4{font-size:.95rem;color:var(--txt);margin-bottom:.35rem;font-family:'Clash Display',sans-serif;font-weight:600}
 .empty-state p{font-size:.8rem;color:var(--muted);max-width:230px;margin:0 auto .9rem;line-height:1.6}
 
+/* ══════ CHAT ══════ */
+.conv-list{flex:1;overflow-y:auto;background:#fff}
+.conv-item{
+  display:flex;align-items:center;gap:.85rem;
+  padding:.9rem 1.1rem;border-bottom:1px solid var(--border2);
+  cursor:pointer;transition:background .15s;position:relative;background:#fff;
+}
+.conv-item:active{background:var(--surface2)}
+.conv-item.unread-conv{background:linear-gradient(90deg,#F0F6FF,#fff)}
+.conv-av{
+  width:50px;height:50px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:1rem;color:#fff;
+  border:2.5px solid rgba(255,255,255,.7);position:relative;
+}
+.conv-online{
+  position:absolute;bottom:1px;right:1px;width:12px;height:12px;
+  background:#4ADE80;border-radius:50%;border:2px solid #fff;
+}
+.conv-info{flex:1;min-width:0}
+.conv-name{font-size:.9rem;font-weight:700;color:var(--txt);margin-bottom:.15rem}
+.conv-preview{font-size:.77rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv-preview.bold-p{color:var(--txt);font-weight:600}
+.conv-meta{display:flex;flex-direction:column;align-items:flex-end;gap:.3rem;flex-shrink:0}
+.conv-time{font-size:.67rem;color:var(--light)}
+.conv-badge{
+  min-width:20px;height:20px;background:var(--orange);padding:0 4px;
+  border-radius:50px;display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;font-weight:800;color:#fff;
+}
+.chat-group-label{
+  font-size:.67rem;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.1em;
+  padding:.75rem 1.1rem .3rem;background:var(--bg);
+}
+
+/* Message view — full screen overlay */
+.msg-view{
+  display:none;flex-direction:column;
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:var(--bg);z-index:450;
+}
+.msg-view.open{display:flex;animation:slideInMsg .28s var(--ease) both}
+@keyframes slideInMsg{from{transform:translateX(100%)}to{transform:none}}
+
+.msg-topbar{
+  background:rgba(11,29,53,.97);backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  padding:calc(var(--safe-t) + .55rem) 1rem .55rem;
+  display:flex;align-items:center;gap:.75rem;flex-shrink:0;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.msg-back{
+  width:36px;height:36px;border-radius:10px;border:none;
+  background:rgba(255,255,255,.1);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;flex-shrink:0;transition:all .15s;
+}
+.msg-back:active{transform:scale(.88);background:rgba(255,255,255,.18)}
+.msg-contact-av{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.88rem;color:#fff;
+  border:2px solid rgba(255,255,255,.25);
+}
+.msg-contact-info{flex:1;min-width:0}
+.msg-contact-name{font-size:.92rem;font-weight:700;color:#fff;font-family:'Clash Display',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.msg-contact-status{font-size:.67rem;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:.3rem;margin-top:.1rem}
+
+/* Chat wallpaper */
+.msg-body{
+  flex:1;overflow-y:auto;padding:.9rem 1rem;
+  background:#E8EFF9;
+  display:flex;flex-direction:column;gap:.5rem;
+  position:relative;
+}
+.msg-body::before{
+  content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg width='52' height='52' viewBox='0 0 52 52' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10c0-2.21 1.79-4 4-4 .34 0 .67.04 1 .13C15.79 3.36 18.72 2 22 2c4.41 0 8 3.59 8 8v2h2c3.31 0 6 2.69 6 6 0 .36-.04.71-.1 1.05C40.27 20.51 42 23.08 42 26c0 4.41-3.59 8-8 8h-2v2c0 3.31-2.69 6-6 6-1.8 0-3.41-.8-4.53-2.06C20.72 41.24 18.43 42 16 42c-4.41 0-8-3.59-8-8v-2H6c-3.31 0-6-2.69-6-6 0-1.53.57-2.92 1.5-3.98C.85 21.05.5 20.07.5 19 .5 14.86 3.55 11.5 7.5 11.5c.9 0 1.76.18 2.5.5V10z' fill='%23c4cedf' fill-opacity='0.12' fill-rule='evenodd'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+.msg-body>*{position:relative;z-index:1}
+
+.msg-date-div{text-align:center;margin:.4rem 0}
+.msg-date-div span{
+  background:rgba(148,163,184,.25);backdrop-filter:blur(6px);
+  color:#475569;font-size:.67rem;font-weight:600;
+  padding:.22rem .75rem;border-radius:50px;
+}
+
+.bubble-row{display:flex;align-items:flex-end;gap:.45rem}
+.bubble-row.sent{flex-direction:row-reverse}
+.bubble-av-sm{
+  width:26px;height:26px;border-radius:50%;flex-shrink:0;margin-bottom:2px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;font-weight:700;color:#fff;
+}
+.bubble{
+  max-width:72%;padding:.58rem .82rem;border-radius:18px;
+  font-size:.84rem;line-height:1.55;word-break:break-word;
+  box-shadow:0 1px 3px rgba(0,0,0,.1);
+}
+.bubble.received{background:#fff;color:var(--txt);border-bottom-left-radius:5px}
+.bubble.sent{background:linear-gradient(135deg,#0B1D35,#1A3A7E);color:#fff;border-bottom-right-radius:5px}
+.bubble-sender{font-size:.67rem;font-weight:700;margin-bottom:.2rem;opacity:.7}
+.bubble-time{font-size:.61rem;opacity:.5;margin-top:.28rem;display:flex;align-items:center;gap:.25rem}
+.bubble.sent .bubble-time{justify-content:flex-end}
+
+/* Typing */
+.typing-row{display:flex;align-items:flex-end;gap:.45rem}
+.typing-bubble{
+  display:flex;align-items:center;gap:4px;
+  padding:.6rem .85rem;background:#fff;border-radius:18px;
+  border-bottom-left-radius:5px;box-shadow:0 1px 3px rgba(0,0,0,.1);
+}
+.typing-dot{width:7px;height:7px;border-radius:50%;background:var(--light);animation:typeDot 1.2s ease-in-out infinite}
+.typing-dot:nth-child(2){animation-delay:.18s}
+.typing-dot:nth-child(3){animation-delay:.36s}
+@keyframes typeDot{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-6px);opacity:1}}
+
+/* Input */
+.msg-input-bar{
+  padding:.6rem 1rem calc(.6rem + var(--safe-b));
+  background:#fff;border-top:1px solid var(--border);
+  display:flex;align-items:flex-end;gap:.55rem;flex-shrink:0;
+}
+.msg-input{
+  flex:1;padding:.68rem 1rem;border:1.5px solid var(--border);
+  border-radius:22px;font-size:.87rem;background:var(--bg);
+  color:var(--txt);font-family:'DM Sans',sans-serif;
+  resize:none;max-height:110px;line-height:1.4;
+  transition:border-color .15s;outline:none;overflow:hidden;
+}
+.msg-input:focus{border-color:var(--blue-l);background:#fff}
+.msg-send-btn{
+  width:42px;height:42px;border-radius:50%;border:none;flex-shrink:0;
+  background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .15s;
+  box-shadow:0 3px 10px rgba(26,86,219,.32);
+}
+.msg-send-btn:active{transform:scale(.88)}
+.msg-send-btn:disabled{opacity:.38;transform:none;box-shadow:none}
+
+/* Chat empty */
+.chat-empty{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:.5rem;color:var(--muted);
+  padding:2rem;text-align:center;min-height:180px;
+}
+.chat-empty h4{font-size:.92rem;font-family:'Clash Display',sans-serif;font-weight:600;color:var(--txt);opacity:.6}
+.chat-empty p{font-size:.77rem;line-height:1.6;max-width:210px}
+
 /* ══════ DESKTOP ADAPTATIONS ══════ */
 @media(min-width:640px){
   .modal-ov{align-items:center;padding:1rem}
@@ -1041,6 +1194,26 @@ textarea.form-input{resize:vertical;min-height:80px}
       </div>
     </div>
 
+
+    <!-- ── CHAT ── -->
+    <div id="s-chat" class="section">
+      <div class="page-hero" style="background:linear-gradient(145deg,#0F172A,#1E3A5F);padding:1.2rem 1.5rem">
+        <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:22px 22px;z-index:1"></div>
+        <div class="page-hero-content" style="display:flex;align-items:center;gap:.8rem">
+          <div style="background:rgba(255,255,255,.12);border-radius:14px;padding:.65rem;border:1px solid rgba(255,255,255,.15)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div>
+            <h2 style="font-size:1.15rem">Mensagens</h2>
+            <p style="font-size:.77rem">Chat entre encarregados, Edna e motorista</p>
+          </div>
+        </div>
+      </div>
+      <div id="chatConvList">
+        <!-- conversations rendered by JS -->
+      </div>
+    </div>
+
   </main>
 
   <!-- Bottom navigation -->
@@ -1222,6 +1395,35 @@ textarea.form-input{resize:vertical;min-height:80px}
   </div>
 </div>
 
+
+<!-- Message view (full screen) -->
+<div id="msgView" class="msg-view">
+  <div class="msg-topbar">
+    <button class="msg-back" onclick="ChatUI.closeConv()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15,18 9,12 15,6"/></svg>
+    </button>
+    <div class="msg-contact-av" id="msgContactAv">?</div>
+    <div class="msg-contact-info">
+      <div class="msg-contact-name" id="msgContactName">Contacto</div>
+      <div class="msg-contact-status" id="msgContactStatus">
+        <span class="sd sd-g"></span><span>Online</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:.4rem">
+      <div class="icon-btn" id="msgCallBtn" title="Ligar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.41 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </div>
+    </div>
+  </div>
+  <div class="msg-body" id="msgBody"></div>
+  <div class="msg-input-bar">
+    <textarea class="msg-input" id="msgInput" placeholder="Escreva uma mensagem..." rows="1" maxlength="1000"></textarea>
+    <button class="msg-send-btn" id="msgSendBtn" onclick="ChatUI.send()" disabled>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg>
+    </button>
+  </div>
+</div>
+
 <div id="spinOv" class="spin-ov"><div class="spinner"></div></div>
 <div id="toasts" aria-live="polite"></div>
 
@@ -1319,19 +1521,20 @@ const NAVS={
     {id:'overview',label:'Inicio',ico:'grid'},
     {id:'tracking',label:'GPS',ico:'map'},
     {id:'children',label:'Criancas',ico:'users'},
-    {id:'notifications',label:'Alertas',ico:'bell',badge:true},
+    {id:'chat',label:'Chat',ico:'chat',chatBadge:true},
     {id:'payments',label:'Pagamentos',ico:'credit'},
   ],
   driver:[
     {id:'overview',label:'Inicio',ico:'grid'},
     {id:'routes',label:'Rota',ico:'route'},
     {id:'tracking',label:'Mapa',ico:'map'},
+    {id:'chat',label:'Chat',ico:'chat',chatBadge:true},
     {id:'notifications',label:'Alertas',ico:'bell',badge:true},
   ],
   admin:[
     {id:'overview',label:'Inicio',ico:'grid'},
     {id:'admin',label:'Admin',ico:'settings'},
-    {id:'tracking',label:'Mapa',ico:'map'},
+    {id:'chat',label:'Chat',ico:'chat',chatBadge:true},
     {id:'notifications',label:'Alertas',ico:'bell',badge:true},
     {id:'payments',label:'Financas',ico:'credit'},
   ]
@@ -1348,7 +1551,8 @@ const ICO={
   route:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="6" r="3"/><path d="M8 6h9a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H8"/><circle cx="5" cy="18" r="3"/></svg>`,
   settings:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v3M12 20v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M1 12h3M20 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>`,
   bus:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16,8 20,8 23,11 23,16 16,16"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`,
-  check:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg>`
+  check:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg>`,
+  chat:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`
 };
 
 /* ═══════════ VALIDATORS ═══════════ */
@@ -1669,6 +1873,7 @@ const UI={
     this.navTo('overview');
     setTimeout(()=>MapMod.init(),700);
     Realtime.start();
+    ChatUI.renderList();
   },
   _buildBottomNav(role){
     const items=NAVS[role]||NAVS.parent;
@@ -1677,6 +1882,7 @@ const UI={
         <div class="nav-icon" style="color:${it.id==='overview'?'#fff':'var(--light)'}">
           ${ICO[it.ico]||''}
           ${it.badge?`<span class="nav-badge" style="display:${AppState.unread()>0?'flex':'none'}">${AppState.unread()}</span>`:''}
+          ${it.chatBadge?`<span class="nav-badge chat-nav-badge" style="display:${ChatDB.unreadTotal(AppState.user?.id||0)>0?'flex':'none'}">${ChatDB.unreadTotal(AppState.user?.id||0)}</span>`:''}
         </div>
         <span class="nav-label">${it.label}</span>
       </button>`).join('');
@@ -1696,6 +1902,7 @@ const UI={
     const titles={overview:'Inicio',children:'Criancas',tracking:'Rastreamento',notifications:'Notificacoes',payments:'Pagamentos',routes:'Rota do Dia',security:'Seguranca',admin:'Administracao'};
     if(g('topbarTitle'))g('topbarTitle').textContent=titles[id]||id;
     if(id==='tracking')setTimeout(()=>MapMod._m&&MapMod._m.invalidateSize(),200);
+    if(id==='chat')ChatUI.renderList();
     if(id==='notifications'){AppState.notifs.forEach(n=>n.read=true);Render.notifBadge();}
     // scroll to top
     const mc=g('mainContent');if(mc)mc.scrollTop=0;
@@ -1729,9 +1936,360 @@ const Toast={
 
 function g(id){return document.getElementById(id)}
 
+
+/* ═══════════ CHAT ENGINE ═══════════ */
+const ChatDB = {
+  // Seed initial Edna user and some messages
+  seed() {
+    // Ensure Edna exists
+    if (!DB.find('users', u => u.email === 'edna@katutransporte.ao')) {
+      DB.insert('users', {
+        id: 99, name: 'Edna Carvalho', email: 'edna@katutransporte.ao',
+        password: 'edna123', phone: '+244 926 789 012', role: 'admin',
+        createdAt: new Date().toISOString()
+      });
+    }
+    // Seed demo conversations if none exist
+    if (DB.get('chatMsgs').length > 0) return;
+    const ts = s => new Date(Date.now() - s).toISOString();
+    const msgs = [
+      // Edna <-> pai (userId 1)
+      {id:1, from:99, to:1, text:'Bom dia, Maria! O Carlos vai recolher as crianças às 06h45 amanhã. Obrigada.', ts:ts(86400000*2), read:true},
+      {id:2, from:1, to:99, text:'Bom dia, Edna! Muito obrigada pela informação. A Ana estará pronta.', ts:ts(86400000*2-60000), read:true},
+      {id:3, from:99, to:1, text:'Perfeito! Qualquer coisa me avise.', ts:ts(86400000*2-120000), read:true},
+      {id:4, from:1, to:99, text:'Edna, a Sofia hoje não vai à escola. Pode avisar o motorista?', ts:ts(3600000), read:true},
+      {id:5, from:99, to:1, text:'Certo, já avisei o Carlos. Fique descansada!', ts:ts(3500000), read:false},
+      // Driver (userId 2) <-> pai (userId 1)
+      {id:6, from:2, to:1, text:'Bom dia! Estou a 5 minutos. A Ana já pode ficar pronta.', ts:ts(7200000), read:true},
+      {id:7, from:1, to:2, text:'Perfeito, obrigada Carlos! Ela está pronta.', ts:ts(7100000), read:true},
+      {id:8, from:2, to:1, text:'Ana foi entregue na escola com segurança. Bom dia!', ts:ts(6000000), read:true},
+      {id:9, from:2, to:1, text:'Aviso: hoje o regresso será às 13h30 em vez de 13h00. Obra na estrada.', ts:ts(1800000), read:false},
+      // Edna <-> Driver
+      {id:10, from:99, to:2, text:'Carlos, pode confirmar o estado da rota de amanhã?', ts:ts(86400000), read:true},
+      {id:11, from:2, to:99, text:'Rota confirmada, Edna. Viaturas revisadas. Tudo certo!', ts:ts(86400000-300000), read:true},
+    ];
+    msgs.forEach(m => DB.insert('chatMsgs', m));
+  },
+
+  getConversations(userId) {
+    const all = DB.get('chatMsgs');
+    const myMsgs = all.filter(m => m.from === userId || m.to === userId);
+    const partnerIds = [...new Set(myMsgs.map(m => m.from === userId ? m.to : m.from))];
+    return partnerIds.map(pid => {
+      const user = DB.find('users', u => u.id === pid);
+      const conv = myMsgs.filter(m => m.from === pid || m.to === pid)
+                         .sort((a,b) => new Date(b.ts) - new Date(a.ts));
+      const lastMsg = conv[0];
+      const unread = conv.filter(m => m.from === pid && !m.read).length;
+      return { partner: user, lastMsg, unread };
+    }).filter(c => c.partner).sort((a,b) => new Date(b.lastMsg?.ts||0) - new Date(a.lastMsg?.ts||0));
+  },
+
+  getMessages(userId, partnerId) {
+    return DB.get('chatMsgs')
+      .filter(m => (m.from===userId && m.to===partnerId)||(m.from===partnerId && m.to===userId))
+      .sort((a,b) => new Date(a.ts) - new Date(b.ts));
+  },
+
+  sendMsg(from, to, text) {
+    return DB.insert('chatMsgs', {
+      id: DB.nextId('chatMsgs'), from, to, text: text.trim(),
+      ts: new Date().toISOString(), read: false
+    });
+  },
+
+  markRead(userId, partnerId) {
+    const msgs = DB.get('chatMsgs').map(m =>
+      (m.from === partnerId && m.to === userId) ? {...m, read: true} : m
+    );
+    DB.save('chatMsgs', msgs);
+  },
+
+  unreadTotal(userId) {
+    return DB.get('chatMsgs').filter(m => m.to === userId && !m.read).length;
+  }
+};
+
+/* ═══════════ CHAT UI ═══════════ */
+const ChatUI = {
+  _currentPartner: null,
+  _typingTimer: null,
+  _autoReplyTimer: null,
+
+  // Render conversation list
+  renderList() {
+    const u = AppState.user;
+    const convs = ChatDB.getConversations(u.id);
+    const allUsers = DB.get('users').filter(x => x.id !== u.id);
+
+    // Build list of who we can chat with (those not yet in convs)
+    const convPartnerIds = convs.map(c => c.partner.id);
+    const newContacts = allUsers.filter(x => !convPartnerIds.includes(x.id) && x.id !== u.id);
+
+    let html = '';
+
+    if (convs.length === 0 && newContacts.length === 0) {
+      html = '<div class="chat-empty"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><h4>Sem mensagens</h4><p>Ainda nao ha conversas iniciadas.</p></div>';
+    } else {
+      if (convs.length > 0) {
+        html += '<div class="chat-group-label">Conversas</div>';
+        html += convs.map(c => this._convItem(c.partner, c.lastMsg, c.unread)).join('');
+      }
+      if (newContacts.length > 0) {
+        html += '<div class="chat-group-label">Iniciar conversa</div>';
+        html += newContacts.map(p => this._convItem(p, null, 0)).join('');
+      }
+    }
+
+    const el = document.getElementById('chatConvList');
+    if (el) el.innerHTML = '<div class="conv-list" style="background:#fff">' + html + '</div>';
+
+    // Chat badge on nav
+    const total = ChatDB.unreadTotal(u.id);
+    document.querySelectorAll('.chat-nav-badge').forEach(b => {
+      b.textContent = total; b.style.display = total > 0 ? 'flex' : 'none';
+    });
+  },
+
+  _convItem(partner, lastMsg, unread) {
+    const av = Render._av(partner.name);
+    const roleLabel = {parent:'Encarregado',driver:'Motorista',admin:'Coordenadora'}[partner.role]||partner.role;
+    const preview = lastMsg ? lastMsg.text.substring(0,45)+(lastMsg.text.length>45?'...':'') : 'Toque para iniciar conversa';
+    const time = lastMsg ? this._fmtTime(lastMsg.ts) : '';
+    const isOnline = partner.role === 'driver' || partner.role === 'admin';
+    return `<div class="conv-item${unread?' unread-conv':''}" onclick="ChatUI.openConv(${partner.id})">
+      <div class="conv-av" style="background:${av}">${partner.name[0]}
+        ${isOnline ? '<div class="conv-online"></div>' : ''}
+      </div>
+      <div class="conv-info">
+        <div class="conv-name">${partner.name} <span style="font-size:.66rem;font-weight:500;color:var(--muted);margin-left:.2rem">${roleLabel}</span></div>
+        <div class="conv-preview${unread?' bold-p':''}">${lastMsg?(lastMsg.from===AppState.user.id?'Voce: ':'')+''+preview:preview}</div>
+      </div>
+      <div class="conv-meta">
+        <span class="conv-time">${time}</span>
+        ${unread>0?`<span class="conv-badge">${unread}</span>`:''}
+      </div>
+    </div>`;
+  },
+
+  openConv(partnerId) {
+    const u = AppState.user;
+    const partner = DB.find('users', x => x.id === partnerId);
+    if (!partner) return;
+    this._currentPartner = partner;
+
+    // Mark as read
+    ChatDB.markRead(u.id, partnerId);
+
+    // Setup topbar
+    const av = Render._av(partner.name);
+    document.getElementById('msgContactAv').textContent = partner.name[0];
+    document.getElementById('msgContactAv').style.background = av;
+    document.getElementById('msgContactName').textContent = partner.name;
+    const roleLabel = {parent:'Encarregado',driver:'Motorista',admin:'Coordenadora'}[partner.role]||partner.role;
+    const isOnline = partner.role === 'driver' || partner.role === 'admin';
+    document.getElementById('msgContactStatus').innerHTML =
+      `${isOnline?'<span class="sd sd-g"></span>':''}<span>${isOnline?'Online':'Offline'} &middot; ${roleLabel}</span>`;
+
+    // Render messages
+    this.renderMessages();
+
+    // Show view
+    document.getElementById('msgView').classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    // Focus input
+    setTimeout(() => {
+      const inp = document.getElementById('msgInput');
+      if (inp) inp.focus();
+    }, 350);
+
+    this.renderList();
+  },
+
+  renderMessages() {
+    const u = AppState.user;
+    const p = this._currentPartner;
+    if (!p) return;
+    const msgs = ChatDB.getMessages(u.id, p.id);
+    const body = document.getElementById('msgBody');
+    if (!body) return;
+
+    let html = '';
+    let lastDate = '';
+
+    if (msgs.length === 0) {
+      html = `<div class="chat-empty"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><h4>Conversa nova</h4><p>Envie a primeira mensagem para ${p.name}!</p></div>`;
+    } else {
+      msgs.forEach(m => {
+        const date = new Date(m.ts).toLocaleDateString('pt-PT', {day:'2-digit',month:'long'});
+        if (date !== lastDate) {
+          html += `<div class="msg-date-div"><span>${date}</span></div>`;
+          lastDate = date;
+        }
+        const sent = m.from === u.id;
+        const sender = DB.find('users', x => x.id === m.from);
+        const senderAv = sender ? Render._av(sender.name) : '#888';
+        const senderInit = sender ? sender.name[0] : '?';
+        const time = new Date(m.ts).toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'});
+        html += `<div class="bubble-row${sent?' sent':''}">
+          ${!sent?`<div class="bubble-av-sm" style="background:${senderAv}">${senderInit}</div>`:''}
+          <div class="bubble ${sent?'sent':'received'}">
+            ${!sent&&msgs.filter(x=>x.from===m.from).length>1?`<div class="bubble-sender" style="color:${senderAv}">${sender?.name||''}</div>`:''}
+            ${m.text}
+            <div class="bubble-time">
+              ${time}
+              ${sent?`<span class="tick"><svg width="14" height="9" viewBox="0 0 16 10" fill="none"><polyline points="1,5 5,9 15,1" stroke="${m.read?'#60A5FA':'rgba(255,255,255,.5)'}" stroke-width="1.8" stroke-linecap="round"/>${m.read?'<polyline points="5,5 9,9 15,1" stroke="#60A5FA" stroke-width="1.8" stroke-linecap="round"/>':''}</svg></span>`:''}
+            </div>
+          </div>
+          ${sent?`<div style="width:26px;flex-shrink:0"></div>`:''}
+        </div>`;
+      });
+    }
+
+    body.innerHTML = html;
+    body.scrollTop = body.scrollHeight;
+  },
+
+  closeConv() {
+    clearTimeout(this._autoReplyTimer);
+    clearTimeout(this._typingTimer);
+    this._currentPartner = null;
+    const v = document.getElementById('msgView');
+    v.style.animation = 'none';
+    v.style.transform = 'translateX(100%)';
+    v.style.transition = 'transform .25s cubic-bezier(.4,0,.2,1)';
+    setTimeout(() => {
+      v.classList.remove('open');
+      v.style.transform = '';
+      v.style.transition = '';
+    }, 250);
+    document.body.style.overflow = '';
+    this.renderList();
+  },
+
+  send() {
+    const inp = document.getElementById('msgInput');
+    const u = AppState.user;
+    const p = this._currentPartner;
+    if (!inp || !p || !inp.value.trim()) return;
+
+    ChatDB.sendMsg(u.id, p.id, inp.value.trim());
+    inp.value = '';
+    inp.style.height = '';
+    document.getElementById('msgSendBtn').disabled = true;
+    this.renderMessages();
+
+    // Notify
+    AppState.addNotif(`Mensagem enviada para ${p.name}.`, 'info');
+
+    // Simulate auto-reply after delay
+    this._scheduleAutoReply(p, u);
+  },
+
+  _scheduleAutoReply(partner, sender) {
+    clearTimeout(this._autoReplyTimer);
+    clearTimeout(this._typingTimer);
+
+    const replies = {
+      driver: [
+        'Certo, ja estou a tratar disso!',
+        'Recebido. Obrigado pelo aviso.',
+        'Ok! Estarei ai a hora combinada.',
+        'Compreendido. Ate ja!',
+        'Perfeito, sem problema.',
+        'Ja anotei. Boa tarde!'
+      ],
+      admin: [
+        'Obrigada pela informacao, Maria!',
+        'Certo, vou tratar disso imediatamente.',
+        'Recebido! Qualquer duvida estou aqui.',
+        'Perfeito! Pode ficar descansada.',
+        'Ja registamos. Obrigada!',
+        'Informacao recebida. Boa tarde!'
+      ],
+      parent: [
+        'Obrigada pelo aviso!',
+        'Recebido. Muito obrigada.',
+        'Certo, ficamos a aguardar.',
+        'Ok! Ate amanha.',
+        'Perfeito, obrigada pela comunicacao.'
+      ]
+    };
+
+    const pool = replies[partner.role] || replies.parent;
+    const reply = pool[Math.floor(Math.random() * pool.length)];
+    const delay = 2500 + Math.random() * 2000;
+
+    // Show typing indicator
+    this._typingTimer = setTimeout(() => {
+      const body = document.getElementById('msgBody');
+      if (!body || this._currentPartner?.id !== partner.id) return;
+      const av = Render._av(partner.name);
+      const typingEl = document.createElement('div');
+      typingEl.className = 'typing-row';
+      typingEl.id = 'typingIndicator';
+      typingEl.innerHTML = `
+        <div class="bubble-av-sm" style="background:${av}">${partner.name[0]}</div>
+        <div class="typing-bubble">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>`;
+      body.appendChild(typingEl);
+      body.scrollTop = body.scrollHeight;
+    }, 800);
+
+    // Send reply
+    this._autoReplyTimer = setTimeout(() => {
+      const ti = document.getElementById('typingIndicator');
+      if (ti) ti.remove();
+      if (!this._currentPartner || this._currentPartner.id !== partner.id) {
+        // Still store the message even if conv closed
+        ChatDB.sendMsg(partner.id, sender.id, reply);
+        this.renderList();
+        AppState.addNotif(`${partner.name}: ${reply.substring(0,40)}...`, 'info');
+        Render.notifBadge();
+        return;
+      }
+      ChatDB.sendMsg(partner.id, sender.id, reply);
+      this.renderMessages();
+      this.renderList();
+    }, delay);
+  },
+
+  _fmtTime(iso) {
+    try {
+      const d = new Date(iso);
+      const now = new Date();
+      const diff = now - d;
+      if (diff < 86400000) return d.toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'});
+      if (diff < 604800000) return d.toLocaleDateString('pt-PT',{weekday:'short'});
+      return d.toLocaleDateString('pt-PT',{day:'2-digit',month:'2-digit'});
+    } catch { return ''; }
+  }
+};
+
+/* Input auto-resize and send button state */
+document.addEventListener('DOMContentLoaded', () => {
+  const inp = document.getElementById('msgInput');
+  const btn = document.getElementById('msgSendBtn');
+  if (inp && btn) {
+    inp.addEventListener('input', () => {
+      inp.style.height = 'auto';
+      inp.style.height = Math.min(inp.scrollHeight, 110) + 'px';
+      btn.disabled = !inp.value.trim();
+    });
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ChatUI.send(); }
+    });
+  }
+});
+
 /* ═══════════ BOOT ═══════════ */
 document.addEventListener('DOMContentLoaded',()=>{
   DB.seed();
+  ChatDB.seed();
 
   // Star field
   const stars=g('authStars');
