@@ -48,13 +48,10 @@
         defer>
     </script>
   <style>
-
 /* ================================
    ROOT – IDENTIDADE VISUAL
 ================================ */
-
 :root {
-
   /* Cores Oficiais */
   --azul-institucional: #123F6B;
   --amarelo-escolar: #F4C430;
@@ -63,122 +60,148 @@
   --branco: #FFFFFF;
 
   /* Logo Palette */
-  --navy:#1B3A6B;
-  --navy2:#243F6E;
-  --gold:#D4A017;
-  --gold-l:#E8B820;
-  --gold-pale:#FEF9E7;
-  --olive:#6B6E1A;
-  --olive-l:#848720;
-  --olive-pale:#F5F6E8;
-  --blue:#1E3A8A;
-  --blue-l:#2563EB;
-  --teal:#0D9488;
-  --teal-l:#14B8A6;
-  --green:#059669;
-  --green-l:#10B981;
-  --red:#DC2626;
+  --navy: #1B3A6B;
+  --navy2: #243F6E;
+  --gold: #D4A017;
+  --gold-l: #E8B820;
+  --gold-pale: #FEF9E7;
+  --olive: #6B6E1A;
+  --olive-l: #848720;
+  --olive-pale: #F5F6E8;
+  --blue: #1E3A8A;
+  --blue-l: #2563EB;
+  --teal: #0D9488;
+  --teal-l: #14B8A6;
+  --green: #059669;
+  --green-l: #10B981;
+  --red: #DC2626;
+  --white: #fff;
+  --bg: #F5F4EF;
+  --surface: #fff;
+  --border: #E2E4D4;
+  --txt: #1B2A3B;
+  --muted: #64748B;
+  --light: #94A3B8;
 
-  --white:#fff;
-  --bg:#F5F4EF;
-  --surface:#fff;
-  --border:#E2E4D4;
-  --txt:#1B2A3B;
-  --muted:#64748B;
-  --light:#94A3B8;
-
-  --shadow-soft: 0 8px 24px rgba(27,58,107,.14);
-
+  /* Sombras, bordas, efeitos */
+  --shadow-soft: 0 8px 24px rgba(27, 58, 107, 0.14);
+  --shadow-hover: 0 16px 40px rgba(27, 58, 107, 0.22);
+  --shadow-btn-gold: 0 12px 30px rgba(244, 196, 48, 0.40);
   --radius: 14px;
-  --transition: all .25s cubic-bezier(.4,0,.2,1);
+  --radius-sm: 8px;
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
-  --safe-b:env(safe-area-inset-bottom,0px);
-  --safe-t:env(safe-area-inset-top,0px);
+  /* Safe areas (iOS) */
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-t: env(safe-area-inset-top, 0px);
 }
 
 /* ================================
    RESET BÁSICO
 ================================ */
-
 *,
 *::before,
 *::after {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-  scroll-behavior:smooth;
+  scroll-behavior: smooth;
+  /* Evita salto de scrollbar em alguns browsers */
+  scrollbar-gutter: stable;
 }
 
 body {
-  font-family:'DM Sans',sans-serif;
-  background:var(--bg);
-  color:var(--txt);
-  min-height:100vh;
-  overflow-x:hidden;
-  font-size:15px;
-  line-height:1.5;
-  -webkit-font-smoothing:antialiased;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--txt);
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; /* Firefox */
 }
 
-h1,h2,h3,h4,h5 {
-  font-family:'Clash Display',sans-serif;
-  line-height:1.2;
+h1, h2, h3, h4, h5 {
+  font-family: 'Clash Display', 'DM Sans', sans-serif;
+  line-height: 1.2;
+  /* Evita overflow em títulos longos */
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 /* ================================
    BOTÃO OFICIAL KATUTRANSPORT
 ================================ */
-
 .btn-katutransport {
-
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-
   padding: 14px 30px;
-  min-height: 48px;
-
+  min-height: 48px; /* acessibilidade: alvo de toque mínimo */
   border: none;
   border-radius: var(--radius);
-
   background: linear-gradient(
-      135deg,
-      var(--azul-institucional),
-      #0F3457
+    135deg,
+    var(--azul-institucional) 0%,
+    #0F3457 100%
   );
-
   color: var(--branco);
-  font-family: 'Clash Display', sans-serif;
+  font-family: 'Clash Display', 'DM Sans', sans-serif;
   font-weight: 600;
   font-size: 15px;
   letter-spacing: 0.6px;
   text-transform: uppercase;
-
   cursor: pointer;
   transition: var(--transition);
-
   box-shadow: var(--shadow-soft);
   overflow: hidden;
+  /* Corrige problema de z-index do pseudo-elemento em Safari */
+  isolation: isolate;
+  /* Remove tap highlight padrão em mobile */
+  -webkit-tap-highlight-color: transparent;
+  /* Garante que o texto não quebre */
+  white-space: nowrap;
+  /* Herdado corretamente em formulários */
+  font-family: inherit;
+  /* Previne zoom em iOS ao focar inputs adjacentes */
+  touch-action: manipulation;
+  /* Evita seleção de texto ao clicar rápido */
+  user-select: none;
+  -webkit-user-select: none;
+  /* Garante aparência consistente entre browsers */
+  -webkit-appearance: none;
+  appearance: none;
+  text-decoration: none;
 }
 
-/* Brilho animado */
+/* Brilho animado (shimmer) */
 .btn-katutransport::before {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(
-      120deg,
-      transparent 0%,
-      rgba(255,255,255,0.25) 50%,
-      transparent 100%
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 100%
   );
   transform: translateX(-100%);
-  transition: transform 0.6s ease;
+  transition: transform 0.55s ease;
+  /* Garante que o pseudo-elemento não bloqueie cliques */
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Garante que o conteúdo fique acima do shimmer */
+.btn-katutransport > * {
+  position: relative;
+  z-index: 1;
 }
 
 .btn-katutransport:hover::before {
@@ -189,30 +212,89 @@ h1,h2,h3,h4,h5 {
   background: var(--amarelo-escolar);
   color: var(--azul-institucional);
   transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(244,196,48,.35);
+  box-shadow: var(--shadow-btn-gold);
 }
 
 .btn-katutransport:active {
-  transform: scale(.96);
+  transform: scale(0.96);
+  /* Feedback tátil mais claro */
+  box-shadow: 0 4px 12px rgba(27, 58, 107, 0.2);
 }
 
+/* Foco acessível – nunca remover outline sem substituir */
 .btn-katutransport:focus-visible {
   outline: 3px solid var(--amarelo-escolar);
   outline-offset: 3px;
 }
 
-.btn-katutransport:disabled {
-  background:#B0B0B0;
-  cursor:not-allowed;
-  box-shadow:none;
-  opacity:.7;
+/* Estado desabilitado */
+.btn-katutransport:disabled,
+.btn-katutransport[aria-disabled="true"] {
+  background: #B0B0B0;
+  color: #fff;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.65;
+  transform: none; /* Cancela hover/active transforms */
+  pointer-events: none;
 }
 
-</style>
-</head>
-</style>
-</head>
-<body>
+/* ================================
+   VARIANTE – Secundário (outline)
+================================ */
+.btn-katutransport--outline {
+  background: transparent;
+  color: var(--azul-institucional);
+  border: 2px solid var(--azul-institucional);
+  box-shadow: none;
+}
+
+.btn-katutransport--outline:hover {
+  background: var(--azul-institucional);
+  color: var(--branco);
+  box-shadow: var(--shadow-soft);
+}
+
+/* ================================
+   VARIANTE – Pequeno
+================================ */
+.btn-katutransport--sm {
+  padding: 9px 20px;
+  font-size: 13px;
+  min-height: 38px;
+  border-radius: var(--radius-sm);
+}
+
+/* ================================
+   VARIANTE – Largo (full-width)
+================================ */
+.btn-katutransport--full {
+  width: 100%;
+  display: flex;
+}
+
+/* ================================
+   RESPONSIVIDADE
+================================ */
+@media (max-width: 480px) {
+  .btn-katutransport {
+    padding: 12px 22px;
+    font-size: 14px;
+  }
+}
+/* ================================
+   PREFERÊNCIAS DE MOVIMENTO
+================================ */
+@media (prefers-reduced-motion: reduce) {
+  .btn-katutransport,
+  .btn-katutransport::before {
+    transition: none;
+    animation: none;
+  }
+  .btn-katutransport:hover {
+    transform: none;
+  }
+}
 
 <!-- AUTH SCREEN -->
 <div id="authScreen" class="auth-screen active">
